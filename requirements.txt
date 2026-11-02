@@ -3,3 +3,5 @@ PyYAML
 # Minimum tested version for reservation-alert formatting validation.
 Apprise>=1.13.1
 curl_cffi
+# Only used when historyDb is a postgresql:// URL
+psycopg[binary]

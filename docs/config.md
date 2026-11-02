@@ -125,6 +125,12 @@ historyDb: "/app/data/price_history.db"
 ```
 The file only ever grows (nothing is deleted automatically) - you manage it. Each row is roughly 300 bytes, so even tracking ~10 items twice a day for a 5-month sailing stays well under 2 MB.
 
+**Storing history in PostgreSQL instead of SQLite**: set historyDb to a `postgresql://` URL. The same tables (`runs`, `price_points`, `bookings`, `promos`) are created automatically on first use (plain `CREATE TABLE IF NOT EXISTS`, so the database itself must already exist and the user needs permission to create tables). This needs the `psycopg` package (`pip install "psycopg[binary]"`, already listed in `requirements.txt`); without it a warning is logged and history is skipped, price checking is unaffected. Timestamps are stored as `timestamptz` (UTC) and prices as `NUMERIC(12,2)`. Keep the password out of the file with the `${VAR_NAME}` substitution described below:
+```yaml
+historyDb: "postgresql://tracker:${PG_PASSWORD}@postgres:5432/cruises"
+```
+Cabin-fare rows also carry `ship_name` and `cabin_label` (for example `Allure of the Seas` / `BALCONY 2J`) so they can be queried without decoding `item_code`. Older SQLite files and PostgreSQL tables get these two nullable columns added automatically.
+
 To keep passwords out of your config file, any config value that is exactly `${VAR_NAME}` is replaced with that environment variable when the config is loaded. Useful for Docker/Home Assistant setups or shared machines.
 ```yaml
 accountInfo:

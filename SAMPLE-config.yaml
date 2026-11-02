@@ -46,6 +46,7 @@ showPromos: true # Optional, show active sitewide promotions for each sailing
 dateDisplayFormat: "%m/%d/%Y" # Optional, only needed if you want to override the system's default date display formatting
 logFile: "output.txt"
 # historyDb: "price_history.db" # Optional (off by default). Uncomment to append every price check to a local SQLite file for history/trends
+# historyDb: "postgresql://user:${PG_PASSWORD}@host:5432/dbname" # ...or use a PostgreSQL URL instead of a file (needs psycopg)
 # checkForUpgrades: true # Optional (off by default). For each booked cruise, also list what the other staterooms cost right now vs what you paid (casino bookings: vs your category's current rate)
 # upgradeAlertBelow: 100 # Optional, needs checkForUpgrades. Send an Apprise alert when an upgrade costs this much or less (on the same basis the upgrade table shows)
 # upgradeReservations: ["1234567"] # Optional, needs checkForUpgrades. Only run the upgrade check for these reservation IDs (absent/empty = every booking)
